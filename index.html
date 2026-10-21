@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 언어감수성은 어떠한가?</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Pretendard & Gowun Batang Fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #FBF9F5; /* 따뜻한 종이 질감의 크림 베이지 */
+            color: #433D38;
+        }
+        
+        .font-serif-custom {
+            font-family: 'Gowun Batang', serif;
+        }
+
+        .custom-radio {
+            appearance: none;
+            width: 1.35rem;
+            height: 1.35rem;
+            border: 2px solid #D1C7BD;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            background-color: #FFFFFF;
+        }
+        .custom-radio:checked {
+            border-color: #B85B3A;
+            background-color: #FFFFFF;
+        }
+        .custom-radio:checked::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0.65rem; height: 0.65rem;
+            background-color: #B85B3A;
+            border-radius: 50%;
+        }
+        
+        .view-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transform: translateY(12px);
+        }
+        .view-section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .loader {
+            border: 3px solid #EFE8DE;
+            border-top: 3px solid #B85B3A;
+            border-radius: 50%;
+            width: 20px; height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* 원고지 느낌의 상자 테두리 장식 */
+        .manuscript-box {
+            background-color: #FFFDF9;
+            border: 1px solid #EAE1D5;
+            box-shadow: inset 0 0 0 4px #FFFDF9, inset 0 0 0 5px #F2E9DE;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col items-center py-6 px-4 md:py-12 md:px-0">
+
+    <div id="app-container" class="w-full max-w-2xl bg-white rounded-[2.5rem] shadow-[0_15px_45px_rgba(67,61,56,0.05)] overflow-hidden relative border border-[#EFE8DE]">
+        
+        <!-- ======================= 0. 초기 화면 (로그인/회원가입/소개) ======================= -->
+        <section id="auth-view" class="view-section active p-7 md:p-12">
+            
+            <!-- 헤더 타이틀 -->
+            <div class="text-center mb-8 pt-2">
+                <h1 class="font-serif-custom text-2xl md:text-3xl font-bold text-[#2C2723] leading-snug mb-2">
+                    나의 언어감수성은 어떠한가?
+                </h1>
+            </div>
+
+            <!-- 언어감수성 필요성 상자 (원고지/말풍선 스타일) -->
+            <div class="manuscript-box p-6 md:p-8 rounded-3xl mb-8 relative">
+                <div class="flex items-center gap-2 text-[#B85B3A] font-bold text-sm md:text-base mb-3 border-b border-[#F2E9DE] pb-2.5">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                    <span>언어는 생각을 담는 그릇이자, 타인의 삶을 바라보는 창입니다</span>
+                </div>
+                <div class="text-[#5A524A] text-xs md:text-sm leading-relaxed space-y-3 font-normal break-keep">
+                    <p>
+                        우리가 무심코 사용하는 일상 속 단어, 뉴스 기사의 헤드라인, 숏폼과 SNS의 유행어 속에는 때로 누군가를 상처 입히거나 배제하는 무의식적 편견이 숨어있을 수 있습니다.
+                    </p>
+                    <p>
+                        <strong class="text-[#2C2723] font-semibold bg-[#F5EBE1] px-1.5 py-0.5 rounded">'언어감수성'은 단순히 옳고 그름을 따지는 문법 지식이 아닙니다.</strong><br>
+                        타인의 삶과 존엄을 이해하고, 내 말이 누군가의 세계에 닿는 순간을 세심하게 헤아리는 <strong>'마음의 결'</strong>입니다.
+                    </p>
+                    <p class="pt-1 text-[#8C8075] text-xs">
+                        이 퀴즈는 나의 언어 생활을 조용히 돌아보고, 더 다정하고 평등한 소통을 향해 한 걸음 내딛기 위해 마련되었습니다. <strong>나의 언어감수성은 어떠한지 함께 확인해 보세요.</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 로그인/회원가입 폼 -->
+            <div class="max-w-sm mx-auto bg-[#FAF8F5] p-6 rounded-3xl border border-[#EFE8DE]">
+                <div class="flex border-b border-[#EAE1D5] mb-6">
+                    <button id="tab-login" onclick="toggleAuthMode('login')" class="flex-1 py-2.5 text-center font-bold text-[#B85B3A] border-b-2 border-[#B85B3A] transition-colors text-sm">로그인</button>
+                    <button id="tab-signup" onclick="toggleAuthMode('signup')" class="flex-1 py-2.5 text-center font-bold text-[#A3978C] border-b-2 border-transparent transition-colors text-sm">처음 오셨나요? (회원가입)</button>
+                </div>
+
+                <div class="space-y-3">
+                    <div>
+                        <input type="text" id="auth-id" placeholder="학번 (예: 20401)" class="w-full px-4 py-3.5 bg-white rounded-xl border border-[#E0D7CC] focus:ring-2 focus:ring-[#B85B3A] focus:border-transparent outline-none transition-all text-sm placeholder-[#B5A99C]">
+                    </div>
+                    <div id="name-input-group" class="hidden">
+                        <input type="text" id="auth-name" placeholder="이름" class="w-full px-4 py-3.5 bg-white rounded-xl border border-[#E0D7CC] focus:ring-2 focus:ring-[#B85B3A] focus:border-transparent outline-none transition-all text-sm placeholder-[#B5A99C]">
+                    </div>
+                    <div>
+                        <input type="password" id="auth-pw" placeholder="비밀번호" class="w-full px-4 py-3.5 bg-white rounded-xl border border-[#E0D7CC] focus:ring-2 focus:ring-[#B85B3A] focus:border-transparent outline-none transition-all text-sm placeholder-[#B5A99C]">
+                    </div>
+                </div>
+
+                <div id="auth-message" class="text-xs font-bold text-center hidden mt-4 px-3 py-2.5 rounded-xl"></div>
+
+                <button id="auth-btn" onclick="handleAuth()" class="w-full bg-[#2C2723] hover:bg-[#1A1816] text-white font-bold py-3.5 rounded-xl mt-5 transition-all shadow-md text-sm">
+                    나의 언어감수성 확인하러 가기
+                </button>
+            </div>
+
+            <div class="mt-8 text-center pt-2">
+                <button onclick="document.getElementById('admin-modal').classList.remove('hidden')" class="text-xs text-[#A3978C] hover:text-[#5A524A] underline transition-colors">선생님(관리자) 로그인</button>
+            </div>
+        </section>
+
+        <!-- ======================= 1. 퀴즈 화면 (Quiz View) ======================= -->
+        <section id="quiz-view" class="view-section p-6 md:p-10 bg-[#FAF8F5]">
+            <div class="flex justify-between items-center border-b border-[#EAE1D5] pb-5 mb-8 sticky top-0 bg-[#FAF8F5]/95 backdrop-blur-sm z-10 pt-2">
+                <div>
+                    <h2 class="text-lg md:text-xl font-bold text-[#2C2723]">문항 풀이</h2>
+                </div>
+                <span class="text-xs font-bold text-[#B85B3A] bg-white px-3.5 py-1.5 rounded-full border border-[#EFE8DE] shadow-sm">총 10문항</span>
+            </div>
+            
+            <div id="questions-container" class="space-y-8"></div>
+            
+            <div class="mt-10 pt-6 border-t border-[#EAE1D5] text-center">
+                <div id="quiz-error" class="text-red-500 text-xs font-bold mb-4 hidden bg-red-50 py-2.5 rounded-xl border border-red-100">모든 문항에 답해주세요.</div>
+                <button id="submit-btn" onclick="submitQuiz()" class="w-full bg-[#2C2723] hover:bg-[#1A1816] text-white font-bold py-4 rounded-xl transition-all text-base shadow-md">
+                    <span id="submit-text">제출하고 결과 확인하기</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- ======================= 2. 결과 화면 (Result View) ======================= -->
+        <section id="result-view" class="view-section p-0">
+            <div class="bg-white p-7 md:p-11 text-center border-b border-[#EFE8DE] relative">
+                <div class="font-serif-custom text-xs text-[#B85B3A] font-bold mb-1">진단 결과</div>
+                <h2 class="font-serif-custom text-2xl font-bold mb-5 text-[#2C2723]"><span id="res-name" class="text-[#B85B3A]"></span>님의 언어감수성</h2>
+                
+                <div class="inline-block bg-[#FAF8F5] p-7 rounded-3xl border border-[#EFE8DE] w-full max-w-sm mt-1">
+                    <div class="text-xs text-[#8C8075] font-bold mb-2 uppercase tracking-widest">총점</div>
+                    <div class="text-6xl font-extrabold text-[#2C2723] mb-5"><span id="res-score"></span><span class="text-xl text-[#A3978C] font-normal ml-1">점</span></div>
+                    <div class="bg-white rounded-2xl py-4 px-3 border border-[#EAE1D5]">
+                        <p class="text-xs text-[#8C8075] font-bold mb-1">판정 결과</p>
+                        <p id="res-level-title" class="text-base font-extrabold text-[#B85B3A] break-keep"></p>
+                    </div>
+                </div>
+                
+                <div class="manuscript-box p-6 rounded-2xl mt-7 text-left border border-[#EFE8DE]">
+                    <p id="res-level-desc" class="text-xs md:text-sm text-[#5A524A] leading-relaxed break-keep"></p>
+                </div>
+            </div>
+            
+            <div id="review-section" class="p-6 md:p-10 bg-[#FAF8F5] hidden">
+                <h3 class="font-serif-custom text-lg font-bold mb-6 flex items-center text-[#2C2723] border-b border-[#EAE1D5] pb-4">
+                    <span class="mr-2">📝</span> 문항별 상세 해설 및 나의 선택
+                </h3>
+                
+                <div class="mb-6 flex flex-wrap gap-2 text-xs font-bold text-[#8C8075]">
+                    <span class="flex items-center bg-green-50 px-2.5 py-1 rounded-md border border-green-200 text-green-800">✅ 정답</span>
+                    <span class="flex items-center bg-red-50 px-2.5 py-1 rounded-md border border-red-200 text-red-800">❌ 내가 고른 오답</span>
+                    <span class="flex items-center bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200 text-gray-500">오답 보기</span>
+                </div>
+
+                <div id="review-container" class="space-y-6"></div>
+            </div>
+            
+            <div class="p-6 text-center bg-white border-t border-[#EFE8DE]">
+                <button onclick="logout()" class="bg-[#FAF8F5] text-[#5A524A] font-bold py-3 px-7 rounded-xl hover:bg-[#F2E9DE] transition-colors border border-[#EAE1D5] text-sm">로그아웃</button>
+            </div>
+        </section>
+
+        <!-- ======================= 3. 관리자 화면 (Admin View) ======================= -->
+        <section id="admin-view" class="view-section p-6 md:p-10 bg-white">
+            <div class="flex justify-between items-center mb-6 border-b border-[#EFE8DE] pb-4">
+                <div>
+                    <span class="text-xs text-[#B85B3A] font-bold block">Administrator</span>
+                    <h2 class="text-xl font-bold text-[#2C2723]">학생 응답 결과</h2>
+                </div>
+                <button onclick="logout()" class="text-xs text-[#5A524A] font-bold bg-[#FAF8F5] px-4 py-2 rounded-lg border border-[#EAE1D5]">로그아웃</button>
+            </div>
+            <div class="overflow-x-auto bg-white rounded-2xl border border-[#EFE8DE]">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-[#FAF8F5] text-[#8C8075] text-xs border-b border-[#EFE8DE]">
+                            <th class="p-3.5 font-bold">일시</th>
+                            <th class="p-3.5 font-bold">학번</th>
+                            <th class="p-3.5 font-bold">이름</th>
+                            <th class="p-3.5 font-bold text-center">점수</th>
+                            <th class="p-3.5 font-bold">결과</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-tbody" class="text-xs divide-y divide-[#EFE8DE] text-[#5A524A]">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+    </div>
+
+    <!-- 관리자 로그인 모달 -->
+    <div id="admin-modal" class="hidden fixed inset-0 bg-[#2C2723]/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-all">
+        <div class="bg-white p-7 rounded-3xl w-full max-w-sm shadow-xl border border-[#EFE8DE]">
+            <h3 class="font-serif-custom text-lg font-bold mb-1 text-[#2C2723]">선생님(관리자) 로그인</h3>
+            <p class="text-xs text-[#8C8075] mb-5">관리자 비밀번호를 입력해 주세요.</p>
+            <input type="password" id="admin-pw-input" placeholder="비밀번호 입력" class="w-full px-4 py-3 bg-[#FAF8F5] rounded-xl border border-[#E0D7CC] focus:ring-2 focus:ring-[#B85B3A] outline-none text-sm mb-3">
+            
+            <div id="admin-error" class="text-red-500 text-xs font-bold hidden mb-4 bg-red-50 p-2.5 rounded-xl border border-red-100"></div>
+            
+            <div class="flex gap-2">
+                <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="flex-1 py-3 bg-[#FAF8F5] text-[#5A524A] rounded-xl font-bold text-xs border border-[#EAE1D5]">취소</button>
+                <button onclick="loginAdmin()" id="admin-login-btn" class="flex-1 py-3 bg-[#2C2723] text-white rounded-xl font-bold text-xs">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ★★★ 구글 앱스 스크립트 배포 URL을 여기에 입력해 주세요 ★★★
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyMl_4Z6yMiFpP4xP0Hpfj7AuurbSi0EX-jObJCE5LZDOZG85FzMibWxqjyG2maN3UoPg/exec';
+
+        // 10개 시의성 고품질 문항 데이터
+        const quizData = [
+            {
+                id: 1, 
+                question: "생성형 AI 모델 활용이 늘어나는 요즘, 직업이나 역할에 불필요한 성별 고정관념을 의도치 않게 강화하여 수정이 가장 필요한 표현은?",
+                options: [
+                    "이번 신규 프로젝트 개발 팀에 실력 있는 여성 개발자가 합류했다.",
+                    "응급실에서 의사와 간호사가 함께 환자 처치를 진행했다.",
+                    "돌봄 노동의 사회적 가치를 재평가해야 한다.",
+                    "초등학교 교사진의 성비 불균형 해소가 논의되었다."
+                ],
+                answer: 0,
+                expCorrect: "'여성 개발자', '여의사', '여경'처럼 특정 전문직 앞에 불필요하게 '여성'을 붙이는 것은, 해당 직업의 기본값(Default)을 남성으로 전제하는 무의식적 편향(미세차별)이므로 지양해야 합니다.",
+                expIncorrect: "나머지 보기는 직업 본연의 명칭이나 사회적 현상을 있는 그대로 표현한 중립적인 언어입니다."
+            },
+            {
+                id: 2, 
+                question: "다음 정치·사회 뉴스 기사 제목 중, 장애나 질병을 '부정적 상태'의 비유로 사용하여 차별을 유발하는 표현이 포함되지 '않은' 것은?",
+                options: [
+                    "정부의 부동산 정책, 현장의 목소리에 귀머거리 대응",
+                    "여야, 민생 법안 처리를 두고 기싸움... 상임위 파행 논란",
+                    "외교 안보 협상, 한 걸음도 나아가지 못하는 외눈박이 행정",
+                    "국회 검증 체계, 부실한 제출 자료로 깜깜이 심사 우려"
+                ],
+                answer: 1,
+                expCorrect: "'파행'은 불균형이나 차질을 뜻하는 일반 어휘입니다.",
+                expIncorrect: "'귀머거리', '외눈박이'는 시청각 장애인을 직접 비하하는 단어이며, '깜깜이' 역시 시각 장애를 '무지'나 '비공개'의 부정적 상태로 은유하는 차별어이므로 '비공개 심사', '정보 불투명'으로 고쳐 써야 합니다."
+            },
+            {
+                id: 3, 
+                question: "디지털 기기 보급과 관련해 연령대별 집단을 비하하거나 배제하지 않고 올바르게 작성된 문장은?",
+                options: [
+                    "이번 신제품은 스마트폰 사용에 서툰 할매·할배를 위한 쉬운 모드입니다.",
+                    "디지털 기기 활용이 익숙하지 않은 디지털 소외 계층을 위한 맞춤형 교육을 실시합니다.",
+                    "요즘 잼민이들의 유행어를 이해하지 못하면 대화가 안 됩니다.",
+                    "이번 주말 젊은이들만 아는 핫플레이스 탐방!"
+                ],
+                answer: 1,
+                expCorrect: "개인의 나이나 능력을 탓하지 않고, '환경과 상황(디지털 소외)'에 초점을 맞춘 포용적이고 전문적인 언어입니다.",
+                expIncorrect: "'할매/할배', '잼민이(아동 비하)'는 특정 연령대를 희화화하고 타자화하는 표현입니다."
+            },
+            {
+                id: 4, 
+                question: "글로벌 대학이나 직장에서 외국인 구성원과 대화할 때, 칭찬처럼 보이지만 내재된 편견이 들어있어 지양해야 하는 발언(미세차별)은?",
+                options: [
+                    "이번 프로젝트 발표 시 시각 자료의 구성이 유익했습니다.",
+                    "한국에 오신 지 얼마 안 되었는데 어쩜 이렇게 한국어를 잘하세요?",
+                    "다음 주 회의 시각과 안건을 이메일로 송부해 드렸습니다.",
+                    "문화적 차이로 발생할 수 있는 안내문 번역 오류를 함께 점검해 봅시다."
+                ],
+                answer: 1,
+                expCorrect: "겉으로는 칭찬 같지만 그 안에는 '외국인은 한국어를 못할 것이다'라는 시혜적인 전제가 깔려 있는 대표적인 '미세차별(Microaggression)'입니다.",
+                expIncorrect: "나머지 보기는 상대의 국적이나 출신과 무관하게 개인의 역량과 업무 자체에 집중한 바른 소통입니다."
+            },
+            {
+                id: 5, 
+                question: "현대 사회의 다양한 가구 형태를 특정 기준(양부모 중심)으로 낙인찍지 않도록 올바르게 연결된 권장 용어는?",
+                options: [
+                    "부모 중 한 쪽만 있는 가정 ➔ 결손 가정",
+                    "결혼하지 않고 혼자 사는 삶 ➔ 미혼",
+                    "부모 중 한 사람과 자녀로 구성된 가구 ➔ 한부모 가구",
+                    "법적 혼인 관계를 맺은 전형적 가족 ➔ 정상 가족"
+                ],
+                answer: 2,
+                expCorrect: "'한부모 가구'는 있는 그대로의 가구 형태를 설명하는 가치 중립적 공식 용어입니다.",
+                expIncorrect: "'결손(모자람)', '정상(나머지는 비정상)', '미혼(결혼을 아직 안 함/못 함)'은 가부장적 관념이 반영된 차별어입니다. ('비혼' 권장)"
+            },
+            {
+                id: 6, 
+                question: "일상 대화나 SNS에서 정신질환 관련 용어가 오용되는 사례가 많습니다. 신경다양성과 정신건강을 존중하는 가장 바른 문장은?",
+                options: [
+                    "오늘 날씨가 맑았다가 갑자기 비가 오네, 완전 조울증 날씨다.",
+                    "책상이 조금만 어질러져 있어도 못 참겠어, 나 강박증인가 봐.",
+                    "업무 중 집중력이 쉽게 흐려질 때는 단기 휴식 및 환경 변화가 도움이 됩니다.",
+                    "그 영화 주인공은 행동이 이상해서 완전 자폐적인 느낌이었어."
+                ],
+                answer: 2,
+                expCorrect: "개인의 상태(집중력 저하)와 해결책을 객관적인 언어로 잘 설명했습니다.",
+                expIncorrect: "조울증, 강박증, 자폐 등을 변덕이나 유별남의 비유로 가볍게 소비하는 것은 실제 질환자와 가족들에게 상처를 주는 낙인 언어입니다."
+            },
+            {
+                id: 7, 
+                question: "기후위기 대응 및 생명존중 관점에서 인류 중심적 시각을 지양하고 사안의 엄중함을 올바르게 반영한 기사 문장은?",
+                options: [
+                    "도심 속 도둑고양이 개체수 조절을 위한 중성화 사업 실시",
+                    "단순히 예쁘다고 사들이는 애완동물 산업의 문제점",
+                    "지구 온난화 수준을 넘어, 인류 생존을 위협하는 기후위기 상황에 직면했습니다.",
+                    "방치된 똥개들을 보호하기 위한 임시 보호소 개설"
+                ],
+                answer: 2,
+                expCorrect: "단순한 온도 상승을 뜻하는 '온난화' 대신 사안의 경각심을 담은 '기후위기/기후비상'이 국제 언론 가이드라인 권장어입니다.",
+                expIncorrect: "동물을 소유물이나 부정적 존재로 보는 단어 대신 '길고양이', '반려동물', '유기견'이 올바른 수식어입니다."
+            },
+            {
+                id: 8, 
+                question: "언론 기사나 교과서에서 인물 및 사건을 다룰 때 가부장적 편견이 담기지 않은 올바른 용어 표기는?",
+                options: [
+                    "남편이 먼저 세상을 떠난 여성을 가리킬 때 ➔ 미망인(未亡人)",
+                    "여성 독립운동가 유관순을 공식 지칭할 때 ➔ 유관순 누나",
+                    "작가가 평생 처음으로 출간한 작품 ➔ 처녀작(處女作)",
+                    "국가를 위해 목숨을 바친 인물들을 기릴 때 ➔ 순국선열 및 호국영령"
+                ],
+                answer: 3,
+                expCorrect: "성별이나 사적 친분과 무관한 공적이고 존중을 담은 존칭입니다.",
+                expIncorrect: "'미망인(남편 따라 아직 안 죽은 사람)', '누나(공적 영웅의 사적 하대)', '처녀작(성적 비유, 데뷔작/첫 작품 권장)'은 오랫동안 관습적으로 잘못 쓰여온 대표적 성차별어입니다."
+            },
+            {
+                id: 9, 
+                question: "온라인 커뮤니티나 숏폼 콘텐츠에서 쓰이는 유행어 중, 특정 대상에 대한 조롱이나 비하의 의미가 담겨 있지 않은 순수한 유행어는?",
+                options: [
+                    "객관적 사실에 근거해 정곡을 찌르는 상황을 뜻하는 '팩트폭력'",
+                    "나이가 많거나 보수적인 사람을 조롱하는 '틀딱'",
+                    "어린이나 초등학생을 철없는 존재로 부르는 '잼민이'",
+                    "마음에 들지 않는 집단 뒤에 벌레를 붙이는 '~충'"
+                ],
+                answer: 0,
+                expCorrect: "특정 사회적 약자나 인구 집단을 비하하지 않고 대화 상황 자체를 묘사하는 일반적인 유행어입니다.",
+                expIncorrect: "연령 차별(틀딱), 아동 비하(잼민이), 타자 멸시(~충)의 의미가 직접 결합된 심각한 디지털 혐오 표현입니다."
+            },
+            {
+                id: 10, 
+                question: "대학 조모임이나 직장 회의에서 팀원 간 소통할 때, 성별·지위 고정관념을 배제하고 가장 수평적으로 발언한 사례는?",
+                options: [
+                    "이번 회의록 작성 및 음료 준비는 꼼꼼한 여학생·여직원이 맡아주세요.",
+                    "팀장님의 리더십 덕분에 남자의 자존심을 지켰습니다.",
+                    "프로젝트 역할 분담은 각자의 전문성과 희망 분야를 기준으로 정하겠습니다.",
+                    "젊은 친구가 센스가 좋으니 회식 장소 물색을 전담해 봐."
+                ],
+                answer: 2,
+                expCorrect: "성별이나 나이가 아닌 개인의 역량과 존중을 중심에 둔 건강한 소통입니다.",
+                expIncorrect: "잡무를 특정 성별이나 막내(젊은 층)에게 전가하거나, 성별 고정관념을 부추기는 수직적이고 편향된 발언입니다."
+            }
+        ];
+
+        let currentUser = null;
+        let authMode = 'login';
+        let userAnswers = new Array(quizData.length).fill(null);
+
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleAuthMode(mode) {
+            authMode = mode;
+            const msgEl = document.getElementById('auth-message');
+            msgEl.classList.add('hidden');
+            
+            if (mode === 'login') {
+                document.getElementById('tab-login').className = "flex-1 py-2.5 text-center font-bold text-[#B85B3A] border-b-2 border-[#B85B3A] transition-colors text-sm";
+                document.getElementById('tab-signup').className = "flex-1 py-2.5 text-center font-bold text-[#A3978C] border-b-2 border-transparent transition-colors text-sm";
+                document.getElementById('name-input-group').classList.add('hidden');
+                document.getElementById('auth-btn').textContent = "나의 언어감수성 확인하러 가기";
+            } else {
+                document.getElementById('tab-signup').className = "flex-1 py-2.5 text-center font-bold text-[#B85B3A] border-b-2 border-[#B85B3A] transition-colors text-sm";
+                document.getElementById('tab-login').className = "flex-1 py-2.5 text-center font-bold text-[#A3978C] border-b-2 border-transparent transition-colors text-sm";
+                document.getElementById('name-input-group').classList.remove('hidden');
+                document.getElementById('auth-btn').textContent = "회원가입하기";
+            }
+        }
+
+        async function apiCall(data) {
+            if(!SCRIPT_URL || SCRIPT_URL.includes('Example')) {
+                throw new Error("구글 시트 연동 URL이 설정되지 않았습니다. SCRIPT_URL을 확인해주세요.");
+            }
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(data)
+            });
+            return await response.json();
+        }
+
+        async function handleAuth() {
+            const id = document.getElementById('auth-id').value.trim();
+            const pw = document.getElementById('auth-pw').value.trim();
+            const name = document.getElementById('auth-name').value.trim();
+            const msgEl = document.getElementById('auth-message');
+            const btnEl = document.getElementById('auth-btn');
+
+            if (!id || !pw || (authMode === 'signup' && !name)) {
+                showMessage(msgEl, "모든 정보를 입력해주세요.", 'error');
+                return;
+            }
+
+            btnEl.innerHTML = '<span class="loader"></span>';
+            btnEl.disabled = true;
+            msgEl.classList.add('hidden');
+
+            try {
+                const payload = { action: authMode, studentId: id, password: pw, studentName: name };
+                const res = await apiCall(payload);
+                
+                if (res.result === 'success') {
+                    if (authMode === 'signup') {
+                        showMessage(msgEl, "회원가입이 완료되었습니다. 로그인해 주세요.", 'success');
+                        setTimeout(() => toggleAuthMode('login'), 1200);
+                    } else {
+                        currentUser = {
+                            id: id,
+                            name: res.studentName,
+                            score: res.score,
+                            levelTitle: res.levelTitle
+                        };
+                        
+                        if (currentUser.score !== "" && currentUser.score !== undefined) {
+                            showResultView();
+                        } else {
+                            startQuiz();
+                        }
+                    }
+                } else {
+                    showMessage(msgEl, res.message || "오류가 발생했습니다.", 'error');
+                }
+            } catch (err) {
+                showMessage(msgEl, err.message, 'error');
+            } finally {
+                btnEl.textContent = authMode === 'signup' ? "회원가입하기" : "나의 언어감수성 확인하러 가기";
+                btnEl.disabled = false;
+            }
+        }
+
+        function showMessage(element, text, type) {
+            element.textContent = text;
+            element.className = `text-xs font-bold text-center mt-3 px-3 py-2 rounded-xl ${
+                type === 'error' ? 'text-red-600 bg-red-50 border border-red-100' : 'text-green-700 bg-green-50 border border-green-100'
+            }`;
+            element.classList.remove('hidden');
+        }
+
+        function startQuiz() {
+            renderQuestions();
+            switchView('quiz-view');
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            quizData.forEach((q, index) => {
+                const qBlock = document.createElement('div');
+                qBlock.className = "bg-white p-6 md:p-7 rounded-2xl border border-[#EFE8DE] shadow-sm";
+                let html = `
+                    <div class="mb-5">
+                        <span class="inline-block bg-[#FAF8F5] border border-[#EAE1D5] text-[#B85B3A] text-[11px] px-2.5 py-1 rounded-md font-bold tracking-wide mb-3">문항 ${index + 1}</span>
+                        <h3 class="text-base font-bold text-[#2C2723] leading-relaxed break-keep">${q.question}</h3>
+                    </div>
+                    <div class="space-y-2.5">
+                `;
+                q.options.forEach((opt, optIndex) => {
+                    html += `
+                        <label class="flex items-start p-3.5 bg-[#FAF8F5] border border-[#EAE1D5] rounded-xl hover:bg-[#F2E9DE]/50 cursor-pointer transition-colors group">
+                            <input type="radio" name="q${index}" value="${optIndex}" onchange="selectAnswer(${index}, ${optIndex})" class="custom-radio mt-0.5 group-hover:border-[#B85B3A]">
+                            <span class="ml-3 text-xs md:text-sm text-[#5A524A] leading-snug">${opt}</span>
+                        </label>`;
+                });
+                qBlock.innerHTML = html + '</div>';
+                container.appendChild(qBlock);
+            });
+        }
+
+        function selectAnswer(qIdx, optIdx) {
+            userAnswers[qIdx] = optIdx;
+            document.getElementById('quiz-error').classList.add('hidden');
+        }
+
+        async function submitQuiz() {
+            if (userAnswers.includes(null)) {
+                document.getElementById('quiz-error').classList.remove('hidden');
+                return;
+            }
+
+            const btnEl = document.getElementById('submit-btn');
+            btnEl.innerHTML = '<span class="loader"></span> 제출 중...';
+            btnEl.disabled = true;
+
+            let score = userAnswers.reduce((acc, ans, i) => acc + (ans === quizData[i].answer ? 10 : 0), 0);
+            let levelTitle = score <= 40 ? "아차! 언어감수성이 조금 낮은 편이에요" :
+                             score <= 70 ? "좋아요! 보통 수준의 언어감수성을 갖추셨어요" :
+                             "훌륭해요! 높은 수준의 언어감수성을 지니셨어요";
+
+            currentUser.score = score;
+            currentUser.levelTitle = levelTitle;
+
+            try {
+                await apiCall({
+                    action: 'submitQuiz',
+                    studentId: currentUser.id,
+                    score: score,
+                    levelTitle: levelTitle
+                });
+                showResultView(true);
+            } catch (err) {
+                document.getElementById('quiz-error').textContent = "저장 실패: " + err.message;
+                document.getElementById('quiz-error').classList.remove('hidden');
+                btnEl.textContent = "제출하고 결과 확인하기";
+                btnEl.disabled = false;
+            }
+        }
+
+        function showResultView(showReview = false) {
+            document.getElementById('res-name').textContent = currentUser.name;
+            document.getElementById('res-score').textContent = currentUser.score;
+            document.getElementById('res-level-title').textContent = currentUser.levelTitle;
+            
+            let levelDesc = currentUser.score <= 40 ? "일상적인 언어 습관 속에 무심코 차별이나 편견이 담긴 표현을 사용하고 계실 가능성이 있습니다. 악의가 없었더라도 자주 쓰이는 유행어나 무의식적 관습 속에는 특정 대상을 배제하는 의미가 숨어있는 경우가 많습니다. 문항별 상세 해설을 천천히 읽어보며 내가 쓰는 단어의 결을 돌아보는 계기가 되길 바랍니다." :
+                            currentUser.score <= 70 ? "언어감수성에 대한 기본적인 이해와 상대방을 향한 배려심을 두루 갖추고 계십니다! 다만 일상에 깊숙이 숨어있는 '미세차별'이나 오래된 성차별/세대 표현 앞에서는 약간 헷갈리셨을 수 있습니다. 상세 해설을 통해 몰랐던 부분을 조금만 다듬는다면 더욱 따뜻한 소통을 이어가실 수 있을 거예요." :
+                            "매우 높은 수준의 언어감수성을 지니고 계십니다! 젠더, 세대, 장애, 인종 등 다양한 계층에 대한 공감 능력이 뛰어нами, 언어 속 차별 요소를 예민하게 캐치하는 감각을 갖추셨습니다. 앞으로도 평등하고 다정한 말과 글을 통해 우리 사회에 선한 영향력을 널리 펼쳐주세요!";
+            
+            document.getElementById('res-level-desc').textContent = levelDesc;
+
+            if (showReview || currentUser.score !== "") {
+                renderReview();
+                document.getElementById('review-section').classList.remove('hidden');
+            }
+
+            switchView('result-view');
+        }
+
+        function renderReview() {
+            const container = document.getElementById('review-container');
+            container.innerHTML = '';
+            quizData.forEach((q, i) => {
+                const isCorrect = userAnswers[i] === q.answer;
+                
+                let opts = '<ul class="mt-4 space-y-2">';
+                q.options.forEach((opt, optI) => {
+                    let style = "";
+                    let badge = "";
+                    
+                    if (optI === q.answer) {
+                        style = "text-green-800 font-bold border border-green-200 bg-green-50/80 px-3.5 py-2.5 rounded-xl";
+                        badge = "<span class='bg-green-200 text-green-800 text-[10px] px-1.5 py-0.5 rounded mr-2 font-bold flex-shrink-0'>✅ 정답</span>";
+                    } else if (optI === userAnswers[i] && !isCorrect) {
+                        style = "text-red-800 font-bold border border-red-200 bg-red-50/80 px-3.5 py-2.5 rounded-xl line-through opacity-90";
+                        badge = "<span class='bg-red-200 text-red-800 text-[10px] px-1.5 py-0.5 rounded mr-2 font-bold flex-shrink-0'>❌ 내가 선택한 오답</span>";
+                    } else {
+                        style = "text-[#A3978C] border border-[#EFE8DE] bg-[#FAF8F5] px-3.5 py-2.5 rounded-xl";
+                        badge = "<span class='bg-[#EFE8DE] text-[#8C8075] text-[10px] px-1.5 py-0.5 rounded mr-2 font-bold flex-shrink-0'>오답</span>";
+                    }
+                    opts += `<li class="${style} flex items-start text-xs leading-relaxed">${badge} <span class="pt-0.5">${opt}</span></li>`;
+                });
+                opts += '</ul>';
+
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="bg-white border ${isCorrect?'border-green-300':'border-red-200'} rounded-2xl p-5 md:p-7 shadow-sm">
+                        <div class="flex items-start mb-3">
+                            <span class="text-base mr-2 mt-0.5">${isCorrect ? '✅' : '❌'}</span>
+                            <h4 class="font-bold text-[#2C2723] text-sm md:text-base break-keep"><span class="text-[#B85B3A] mr-1">Q${i+1}.</span> ${q.question}</h4>
+                        </div>
+                        ${opts}
+                        <div class="mt-5 p-4 bg-[#FAF8F5] rounded-xl text-xs text-[#5A524A] border border-[#EFE8DE] leading-relaxed space-y-2">
+                            <p><strong class="text-green-700 font-bold block mb-0.5">▶ 정답 해설</strong> ${q.expCorrect}</p>
+                            <p><strong class="text-red-600 font-bold block mb-0.5">▶ 오답 설명</strong> ${q.expIncorrect}</p>
+                        </div>
+                    </div>
+                `);
+            });
+        }
+
+        async function loginAdmin() {
+            const pw = document.getElementById('admin-pw-input').value;
+            const btnEl = document.getElementById('admin-login-btn');
+            const errEl = document.getElementById('admin-error');
+            
+            if(!pw) return;
+
+            btnEl.innerHTML = '<span class="loader" style="width:14px;height:14px;border-top-color:#fff"></span>';
+            errEl.classList.add('hidden');
+
+            try {
+                const res = await apiCall({ action: 'getAdminData', adminPassword: pw });
+                if(res.result === 'success') {
+                    document.getElementById('admin-modal').classList.add('hidden');
+                    renderAdminTable(res.data);
+                    switchView('admin-view');
+                } else {
+                    errEl.textContent = res.message;
+                    errEl.classList.remove('hidden');
+                }
+            } catch (err) {
+                errEl.textContent = err.message;
+                errEl.classList.remove('hidden');
+            } finally {
+                btnEl.textContent = '확인';
+            }
+        }
+
+        function renderAdminTable(data) {
+            const tbody = document.getElementById('admin-tbody');
+            tbody.innerHTML = '';
+            if(data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="p-6 text-center text-[#8C8075]">응답 데이터가 없습니다.</td></tr>';
+                return;
+            }
+            data.forEach(row => {
+                const displayScore = row.score !== "" && row.score !== undefined ? `<span class="font-extrabold text-[#B85B3A]">${row.score}점</span>` : '<span class="text-[#A3978C]">미응답</span>';
+                const displayLevel = row.levelTitle !== "" && row.levelTitle !== undefined ? row.levelTitle : '-';
+                
+                const date = new Date(row.timestamp);
+                const dateStr = `${date.getMonth()+1}/${date.getDate()} ${date.getHours()}:${String(date.getMinutes()).padStart(2,'0')}`;
+                
+                tbody.insertAdjacentHTML('beforeend', `
+                    <tr class="hover:bg-[#FAF8F5] transition-colors">
+                        <td class="p-3.5 text-[#8C8075] text-[11px]">${dateStr}</td>
+                        <td class="p-3.5 font-bold text-[#2C2723]">${row.studentId}</td>
+                        <td class="p-3.5 font-medium">${row.studentName}</td>
+                        <td class="p-3.5 text-center">${displayScore}</td>
+                        <td class="p-3.5 text-[11px] font-bold">${displayLevel}</td>
+                    </tr>
+                `);
+            });
+        }
+
+        function logout() {
+            currentUser = null;
+            userAnswers = new Array(quizData.length).fill(null);
+            document.getElementById('auth-id').value = '';
+            document.getElementById('auth-pw').value = '';
+            document.getElementById('auth-name').value = '';
+            document.getElementById('admin-pw-input').value = '';
+            switchView('auth-view');
+        }
+    </script>
+</body>
+</html>
